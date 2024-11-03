@@ -1,0 +1,48 @@
+#!/bin/bash
+
+USUARIO=$(ls -l /home | awk -F" " '{print $9}' | egrep -v "^$" | head -n1)
+CAMINHO="/home/$USUARIO/.emacs.d"
+
+function criar_ac(){
+	cd "$CAMINHO"
+	if [[ ! -d "packages" ]]
+	then
+	   	mkdir packages
+		cd packages
+		git clone https://github.com/auto-complete/auto-complete.git
+		git clone https://github.com/auto-complete/popup-el.git
+	else
+		cd packages
+		git clone https://github.com/auto-complete/auto-complete.git
+		git clone https://github.com/auto-complete/popup-el.git
+	fi
+}
+
+function criar_themes(){
+	cd "$CAMINHO"
+	if [[ ! -d "themes" ]]
+	then
+		mkdir themes
+		cd themes
+		git clone https://gitlab.com/aimebertrand/timu-caribbean-theme.git
+	else
+		cd themes
+		git clone https://gitlab.com/aimebertrand/timu-caribbean-theme.git
+	fi
+}
+
+
+if [[ -d "$CAMINHO" ]]
+then
+	criar_ac
+	criar_themes
+	chown -R $USUARIO:$USUARIO $CAMINHO
+	chmod 764 $CAMINHO
+else
+	mkdir "$CAMINHO"
+	criar_ac
+	criar_themes
+	chown -R $USUARIO:$USUARIO $CAMINHO
+	chmod 764 $CAMINHO
+fi
+

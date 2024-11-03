@@ -1,0 +1,9 @@
+Package: emc
+Version: 0.0
+Architecture: all
+Essential: no
+Priority: optional
+Maintainer: Fernando Alves
+Description: emc is the emacs my configuration created to automatically apply my configurations to the Emacs text editor
+Depends: git (>= 2.45.2), emacs ( >= 29.4)
+
